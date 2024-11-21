@@ -14,7 +14,13 @@ public:
         });
     }
     void connectToServer(const QString& pipeName) {
-        socket->connectToServer("\\\\.\\pipe\\" + pipeName);
+        QString fullPath = pipeName;
+#ifndef Q_OS_UNIX
+        fullPath = "\\\\.\\pipe\\" + pipeName;
+#else
+        fullPath = "CoreFxPipe_" + pipeName;
+#endif
+        socket->connectToServer(fullPath);
         if (!socket->waitForConnected(5000)) {
             qDebug() << "Connection failed:" << socket->errorString();
         } else {
