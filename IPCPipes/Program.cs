@@ -14,7 +14,7 @@ namespace IPCPipes
             using (var server = new NamedPipeServerStream(pipeName, PipeDirection.InOut, 1, PipeTransmissionMode.Byte))
             {
                 server.WaitForConnection();
-                Console.WriteLine("Client connected!");
+                Console.WriteLine("Client was connected!");
                 while (server.IsConnected)
                 {
                     byte[] buffer = new byte[1024];
